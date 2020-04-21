@@ -21,3 +21,15 @@ after_sucess:
   - docker push lautaronavarro/dockerized-app-client
   - docker push lautaronavarro/dockerized-app-server
   - docker push lautaronavarro/dockerized-app-worker
+
+deploy:
+  provider: elasticbeanstalk
+  app: dockerized-app
+  env: DockerizedApp-env
+  bucket_name: "elasticbeanstalk-us-east-2-553804590366"
+  bucket_path: dockerized-app
+  region: "us-east-2"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
