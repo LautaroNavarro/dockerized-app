@@ -5,19 +5,22 @@
             "name": "client",
             "image": "lautaronavarro/dockerized-app-client",
             "hostname": "client",
-            "essential": false
+            "essential": false,
+            "memoryReservation": 256
         },
         {
             "name": "server",
             "image": "lautaronavarro/dockerized-app-server",
             "hostname": "api",
-            "essential": false
+            "essential": false,
+            "memoryReservation": 256
         },
         {
             "name": "worker",
             "image": "lautaronavarro/dockerized-app-worker",
             "hostname": "worker",
-            "essential": false
+            "essential": false,
+            "memoryReservation": 256
         },
         {
             "name": "nginx",
@@ -30,7 +33,8 @@
                     "containerPort": 80
                 }
             ],
-            "links": ["client", "server"]
+            "links": ["client", "server"],
+            "memoryReservation": 256
         }
     ]
 }
