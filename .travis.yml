@@ -1,0 +1,23 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install:
+  - docker build -t lautaronavarro/react-app -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true lautaronavarro/react-app npm test
+
+after_sucess:
+  - docker build -t lautaronavarro/dockerized-app-nginx ./nginx
+  - docker build -t lautaronavarro/dockerized-app-client ./client
+  - docker build -t lautaronavarro/dockerized-app-server ./server
+  - docker build -t lautaronavarro/dockerized-app-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push lautaronavarro/dockerized-app-nginx
+  - docker push lautaronavarro/dockerized-app-client
+  - docker push lautaronavarro/dockerized-app-server
+  - docker push lautaronavarro/dockerized-app-worker
